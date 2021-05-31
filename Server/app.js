@@ -4,20 +4,13 @@ const express = require("express");
 const app = express();
 
 dotenv.config({ path: "./config.env" });
+require("./db/conn");
 
-const DB = process.env.DATABASE;
+app.use(express.json());
 
-mongoose
-  .connect(DB, {
-    useNewUrlParser: true,
-    useCreateIndex: true,
-    useFindAndModify: false,
-    useUnifiedTopology: true,
-  })
-  .then(() => {
-    console.log(`connection successful`);
-  })
-  .catch((err) => console.log(`no connection`));
+// we link the router files to make our route easy
+app.use(require("./router/auth"));
+const PORT = process.env.PORT;
 
 // MiddleWare
 
@@ -26,14 +19,15 @@ const middleware = (req, res, next) => {
   next();
 };
 
-app.get("/", (req, res) => {
-  res.send("Hello World from the server");
-});
+// app.get("/", (req, res) => {
+//   res.send("Hello World from the server app.js");
+// });
 
 app.get("/about", middleware, (req, res) => {
   res.send("Hello World from the about");
 });
 app.get("/contact", (req, res) => {
+  // res.cookie("Test", "Thapa");
   res.send("Hello World from the contact");
 });
 app.get("/signin", (req, res) => {
@@ -43,7 +37,6 @@ app.get("/signup", (req, res) => {
   res.send("Hello World from the registration");
 });
 
-const port = 3000;
-app.listen(port, () => {
-  console.log("Server is running at port number 3000");
+app.listen(PORT, () => {
+  console.log(`Server is running at port number ${PORT}`);
 });
