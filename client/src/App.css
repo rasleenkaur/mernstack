@@ -1,38 +1,100 @@
-.App {
-  text-align: center;
+@import url("https://fonts.googleapis.com/css2?family=Pattaya&display=swap");
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.navbar {
+  background-color: rgb(255, 255, 255) !important;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.navbar-brand {
+  font-size: 1.9rem !important;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.navbar a {
+  font-size: 1.3 rem;
+  text-transform: capitalize;
+}
+.navbar a:hover {
+  color: #7ed6df !important;
+  /* color: rgb(247, 25, 117) !important; */
+  border-bottom: 3px solid #7ed6df;
+  /* rgb(247, 25, 117); */
+}
+.site-header {
+  -webkit-box-shadow: 10px 10px 10px rgb(224, 222, 222);
+  -moz-box-shadow: 10px 10px 10px rgb(224, 222, 222);
+  box-shadow: 5px 5px 5px rgb(224, 222, 222);
+  z-index: 999;
+}
+.navbar-brand {
+  font-family: "Pattaya", sans-serif;
+}
+
+.main-div {
+  width: 100%;
+  height: 100vh;
+  background: rgb(243, 243, 243);
   display: flex;
-  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  /* text-align: center;  */
+}
+.signup-content {
+  width: 70%;
+  padding: 1% 2%;
+  height: 80vh;
+  background-color: #ffffff;
+  border-radius: 15 px;
+  box-shadow: 5px 5px 5px 5px rgb(231, 230, 230);
+  z-index: 999;
+}
+
+.sign-image img {
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 30%;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  height: 100%;
+  width: 100%;
 }
 
-.App-link {
-  color: #61dafb;
+.form-group {
+  position: relative;
+  margin-bottom: 10px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.form-group input {
+  display: block;
+  width: 315px;
+  border: none;
+  border-bottom: 1px solid #757575;
 }
+
+.form-group input:focus {
+  outline: none;
+}
+
+.form-submit {
+  width: 316px;
+}
+
+.signin-content {
+  width: 70%;
+  /* padding: 1% 2%; */
+  align-items: center;
+  height: 80vh;
+  background-color: #ffffff;
+  border-radius: 15 px;
+  box-shadow: 5px 5px 5px 5px rgb(231, 230, 230);
+  z-index: 999;
+}
+/* .signup-image-link {
+  margin-left: 30%;
+} */
