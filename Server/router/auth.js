@@ -2,10 +2,11 @@ const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const authenticate = require("../middleware/authenticate");
 
 require("../db/conn.js");
 
-const User = require("../model/userSchema.js");
+const User = require("../modal/userSchema");
 
 router.get("/", (req, res) => {
   res.send(`Hello world from server`);
@@ -99,6 +100,51 @@ router.post("/signin", async (req, res) => {
   } catch (err) {
     console.log(err);
   }
+});
+
+// About us
+
+router.get("/about", authenticate, (req, res) => {
+  console.log("HEllo my About");
+  res.send(req.rootUser);
+});
+
+// get user data for contact and home page
+router.get("/getData", authenticate, (req, res) => {
+  res.send(req.rootUser);
+});
+
+// contact us page
+router.post("/contact", authenticate, async (req, res) => {
+  console.log("BAckend contact");
+  try {
+    const { name, email, phone, message } = req.body;
+    if (!name || !email || !phone || !message) {
+      console.log("error in contact form");
+      return res.json({ error: "please fill the contact form" });
+    }
+    const userContact = await User.findOne({ _id: req.userID });
+    if (userContact) {
+      const userMessage = await userContact.addMessage(
+        name,
+        email,
+        phone,
+        message
+      );
+
+      await userContact.save();
+      res.status(201).json({ message: "user Contact successfully" });
+    }
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+// logout page
+router.get("/logout", (req, res) => {
+  console.log("HEllo my logout page");
+  res.cookie("jwttoken", { path: "/" });
+  res.status(200).send("User logout");
 });
 
 module.exports = router;

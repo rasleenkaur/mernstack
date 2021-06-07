@@ -1,8 +1,39 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import Loginpic from "../images/Register.svg";
-import { NavLink } from "react-router-dom";
+import { NavLink, useHistory } from "react-router-dom";
+
+import { UserContext } from "../App";
 
 const Login = () => {
+  const { state, dispatch } = useContext(UserContext);
+
+  const history = useHistory();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const loginUser = async (e) => {
+    e.preventDefault();
+
+    const res = await fetch("/signin", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email,
+        password,
+      }),
+    });
+    const data = res.json();
+    if (res.status === 400 || !data) {
+      window.alert("Invalid Credential");
+    } else {
+      dispatch({ type: "USER", payload: true });
+      window.alert("Login Successful");
+      history.push("/");
+    }
+  };
+
   return (
     <>
       <div className="main-div">
@@ -17,7 +48,7 @@ const Login = () => {
           </div>
           <div className="signin-form col ">
             <h2 className="form-title">Sign In</h2>
-            <form className="register-form" id="register-form">
+            <form method="POST" className="register-form" id="register-form">
               <div className="form-group form-floating">
                 <input
                   class="form-control"
@@ -25,6 +56,8 @@ const Login = () => {
                   name="email"
                   id="email"
                   autoComplete="off"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                   placeholder="name"
                 />
                 <label htmlFor="email">
@@ -40,6 +73,8 @@ const Login = () => {
                   name="password"
                   id="password"
                   autoComplete="off"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                   placeholder="name"
                 />
                 <label htmlFor="password">
@@ -55,6 +90,7 @@ const Login = () => {
                   id="signin"
                   className="form-submit btn btn-outline-primary w-75"
                   value="Log In"
+                  onClick={loginUser}
                 ></input>
               </div>
             </form>
